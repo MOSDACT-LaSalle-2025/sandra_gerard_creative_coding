@@ -3,8 +3,8 @@ class EyeStrobe{
   float sizeY;
   int counter = 0;
   float sine;
+  float delay;
   
-  final int DELAY = 1;
   final int RND_X = 1000;
   final int RND_Y = 1000;
   
@@ -18,8 +18,9 @@ class EyeStrobe{
   }
   
   
-  void display(AudioPlayer player){
+  void display(AudioPlayer player, int param){
     //sine = sin(millis()/300)/1.2 + 1;
+    delay = 1 + pow(2,param);
         
     float squareSum=0;
     for (int i = 0; i < player.bufferSize(); i++) {
@@ -27,16 +28,15 @@ class EyeStrobe{
       squareSum += sample * sample;
     }
     float rms = sqrt(squareSum/player.bufferSize());
-    rms = map(rms, 0, 1, 0, 10);
-    println(rms);
-    if (counter==DELAY) {
+    rms = map(rms, 0, 1, 0, 3);
+    if (counter>=delay) {
       background(0);
       counter=0;
     }
     sizeX = random(1,RND_X*rms);
     sizeY = random(1,RND_Y*rms);
     colorMode(HSB, 255);
-    fill(random(255), 255, 255);
+    fill(random(255), random(255), 255);
     ellipse(width/2, height/2, sizeX, sizeY); 
     counter++;
   }  

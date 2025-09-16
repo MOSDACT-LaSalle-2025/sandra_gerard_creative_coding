@@ -8,7 +8,7 @@ EyeStrobe eyestrobe;
 Oscilloscope osci;
 
 int sketchPointer=0;
-
+int param=0;
 
 void setup(){
   size(1920, 1080);
@@ -30,7 +30,7 @@ void setup(){
 void draw(){
   switch(sketchPointer){
     case 0:
-      eyestrobe.display(player);
+      eyestrobe.display(player, param);
       break;
     case 1:
       osci.display(player);
@@ -49,5 +49,12 @@ void keyPressed(){
       sketchPointer=1;
       osci.initialize();
       break;
+    default:
+      if (key >= '1' && key <= '9'){
+        param = (int) key - '1';
+        println(param);
+      }
+      break;
+      
   }
 }
