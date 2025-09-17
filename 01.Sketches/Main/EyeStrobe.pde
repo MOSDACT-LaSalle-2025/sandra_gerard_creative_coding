@@ -13,6 +13,7 @@ class EyeStrobe{
   
   void initialize(){
     stroke(0);
+    strokeWeight(1);
     background(0);
     colorMode(HSB, 255);
   }
