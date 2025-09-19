@@ -9,7 +9,7 @@ class RandomShapes {
   }
 
   void initialize() {
-    npoints = (int) random(4, 100);
+    npoints = (int) random(4, 25);
     points = new PVector[npoints];
     for (int i = 0; i < npoints; i++) {
       points[i] = new PVector(random(width), random(height));
@@ -35,16 +35,16 @@ class RandomShapes {
     stroke(c);
     beginShape();
     // add extra points at start and end for curveVertex smoothing
-    curveVertex(points[npoints - 1].x, points[npoints - 1].y);
+    vertex(points[npoints - 1].x, points[npoints - 1].y);
     for (int i = 0; i < npoints; i++) {
       // wiggle points with noise for animation
       float nx = points[i].x + map(noise(frameCount*speed + i*10), 0, 1, -500, 500);
       float ny = points[i].y + map(noise(frameCount*speed + i*20), 0, 1, -500, 500);
-      curveVertex(nx, ny);
+      vertex(nx, ny);
     }
     // repeat first point for closing
-    curveVertex(points[0].x, points[0].y);
-    curveVertex(points[1].x, points[1].y);
+    vertex(points[0].x, points[0].y);
+    vertex(points[1].x, points[1].y);
     endShape(CLOSE);
   }
   

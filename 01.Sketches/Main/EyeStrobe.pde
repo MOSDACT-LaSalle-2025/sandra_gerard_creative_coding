@@ -21,6 +21,8 @@ class EyeStrobe{
   
   void display(AudioPlayer player, int param){
     //sine = sin(millis()/300)/1.2 + 1;
+    strokeWeight(1);
+    stroke(0);
     delay = 1 + pow(2,param);
         
     float squareSum=0;

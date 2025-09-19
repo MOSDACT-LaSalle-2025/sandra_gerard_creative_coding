@@ -29,6 +29,11 @@ class Oscilloscope{
     shape = shapes[param];
     if(shape==POINTS){strokeWeight(2);}else{strokeWeight(1);}
     
+    colorMode(RGB, 255);
+    stroke(100, 100, 255);
+    strokeWeight(0.5);
+    
+    pushMatrix();
     translate(width/2, height/2);
     // En la referencia: The parameters available for beginShape() are POINTS(nice), LINES, TRIANGLES(nice), TRIANGLE_FAN(nice), TRIANGLE_STRIP(nice), QUADS, and QUAD_STRIP(nice)
     beginShape(shape);
@@ -38,6 +43,7 @@ class Oscilloscope{
       vertex(x, y);
     }
     endShape();
+    popMatrix();
     //filter(BLUR,3);
   }
   
