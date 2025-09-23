@@ -11,6 +11,7 @@
      - 'S' → Shape oscilloscope
      - 'D' → Random shapes (press again for redraw)
      - 'F' → Random shapes + FFT reactive (press again for redraw)
+     - 'G' → Particle system (press again for reset)
      
    MAIN VISUAL PARAMETERS (Numbers from 1 to 9):
      - In shape oscilloscope -> Changes the shape
@@ -44,13 +45,14 @@ JoyDivision joydivision;
 Circle circle;
 LogoParts lp;
 MovingNoise mn;
+Particlez particlez;
 
 int sketchPointer=100;
 int bgPointer=100;
 int param=0;
 
 void setup(){
-  size(1920, 1080, P3D);
+  size(1920, 1080);
   fullScreen();
   background(0);
   frameRate(30);
@@ -68,6 +70,7 @@ void setup(){
   circle = new Circle();
   lp = new LogoParts();
   mn = new MovingNoise();
+  particlez = new Particlez();
   
   player.play();
 }
@@ -79,7 +82,7 @@ void draw(){
       mn.display();
       break;
     case 100:
-      background(0);
+      //background(0);
       break;
   }
   
@@ -99,6 +102,7 @@ void draw(){
       joydivision.display(player);
       break;
     case 4:
+      particlez.display();
       break;
     case 100:
       break;
@@ -135,6 +139,7 @@ void keyPressed(){
       joydivision.initialize();
       break;
     case 'g':
+      particlez.reset();
       sketchPointer=4;
       break;
     case 'b':
