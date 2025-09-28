@@ -46,6 +46,7 @@ Circle circle;
 LogoParts lp;
 MovingNoise mn;
 Particlez particlez;
+Birds birds;
 
 int sketchPointer=100;
 int bgPointer=100;
@@ -71,6 +72,7 @@ void setup(){
   lp = new LogoParts();
   mn = new MovingNoise();
   particlez = new Particlez();
+  birds = new Birds();
   
   player.play();
 }
@@ -82,7 +84,9 @@ void draw(){
       mn.display();
       break;
     case 100:
-      //background(0);
+      background(0);
+      break;
+    case 101:  // Leave transparent
       break;
   }
   
@@ -103,6 +107,9 @@ void draw(){
       break;
     case 4:
       particlez.display();
+      break;
+    case 5:
+      birds.display();
       break;
     case 100:
       break;
@@ -141,6 +148,11 @@ void keyPressed(){
     case 'g':
       particlez.reset();
       sketchPointer=4;
+      break;
+    case 'h':
+      birds.reset();
+      sketchPointer=5;
+      bgPointer=101;
       break;
     case 'b':
       circle.active = true;
