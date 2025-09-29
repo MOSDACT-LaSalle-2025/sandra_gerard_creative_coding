@@ -58,14 +58,7 @@ void setup(){
   fullScreen();
   background(0);
   frameRate(30);
-  
-  textAlign(CENTER);
-  textSize(25);
-  fill(255);
-  text("Loading resources...", width/2, height/2);
-  redraw();
-  delay(1000);
-  
+
   // Audio Library loading
   minim = new Minim(this);
   player = minim.loadFile("/resources/audio/divinity.wav", 512);
@@ -81,21 +74,7 @@ void setup(){
   mn = new MovingNoise();
   particlez = new Particlez();
   birds = new Birds();
-  hands = new HandFast();
-  
-  background(0);
-  text("3", width/2, height/2);
-  redraw();
-  delay(1000);
-  background(0);
-  text("2", width/2, height/2);
-  redraw();
-  delay(1000);
-  background(0);
-  text("1", width/2, height/2);
-  redraw();
-  delay(1000);
-  
+  hands = new HandFast(); 
   
   player.play();
 }
@@ -139,6 +118,19 @@ void draw(){
       break;
     case 100:
       break;
+    // PREP________________________________________________
+    case 509:
+      textAlign(CENTER);
+      textSize(25);
+      fill(255);
+      text("Loading resources...", width/2, height/2);
+      break;
+    case 510:
+      break;
+    case 511:
+      break;
+      
+      
   }
   
   
