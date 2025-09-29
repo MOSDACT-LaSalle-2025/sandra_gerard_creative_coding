@@ -16,12 +16,16 @@ class Particlez{
   void reset(){
     background(0);
     particles.clear();
+    colorMode(RGB);
   }
   
-  void display(){
+  void display(int param){
+    alpha = map(param, 0, 8, 100, 0);
     fill(0, 0, 0, alpha);  // black with low alpha
     noStroke();
     rect(0, 0, width, height);
+    println(width);
+    println(height);
     
     for(int i=0; i<ppf; i++){ 
       if(particles.size()>=maxParticles) { particles.remove(0); }

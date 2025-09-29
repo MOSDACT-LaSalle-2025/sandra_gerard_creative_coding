@@ -47,16 +47,24 @@ LogoParts lp;
 MovingNoise mn;
 Particlez particlez;
 Birds birds;
+HandFast hands;
 
 int sketchPointer=100;
 int bgPointer=100;
 int param=0;
 
 void setup(){
-  size(1920, 1080);
+  //size(1920, 1080);
   fullScreen();
   background(0);
   frameRate(30);
+  
+  textAlign(CENTER);
+  textSize(25);
+  fill(255);
+  text("Loading resources...", width/2, height/2);
+  redraw();
+  delay(1000);
   
   // Audio Library loading
   minim = new Minim(this);
@@ -73,6 +81,21 @@ void setup(){
   mn = new MovingNoise();
   particlez = new Particlez();
   birds = new Birds();
+  hands = new HandFast();
+  
+  background(0);
+  text("3", width/2, height/2);
+  redraw();
+  delay(1000);
+  background(0);
+  text("2", width/2, height/2);
+  redraw();
+  delay(1000);
+  background(0);
+  text("1", width/2, height/2);
+  redraw();
+  delay(1000);
+  
   
   player.play();
 }
@@ -106,10 +129,13 @@ void draw(){
       joydivision.display(player);
       break;
     case 4:
-      particlez.display();
+      particlez.display(param);
       break;
     case 5:
-      birds.display();
+      birds.display(param);
+      break;
+    case 6:
+      hands.display();
       break;
     case 100:
       break;
@@ -130,6 +156,7 @@ void keyPressed(){
   switch(key){
     case 'a':
       sketchPointer=0;
+      bgPointer=101;
       eyestrobe.initialize();
       break;
     case 's':
@@ -147,12 +174,17 @@ void keyPressed(){
       break;
     case 'g':
       particlez.reset();
+      bgPointer=101;
       sketchPointer=4;
       break;
     case 'h':
       birds.reset();
       sketchPointer=5;
       bgPointer=101;
+      break;
+    case 'j':
+      sketchPointer=6;
+      bgPointer=100;
       break;
     case 'b':
       circle.active = true;

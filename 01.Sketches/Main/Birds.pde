@@ -4,6 +4,7 @@ class Birds{
   int npoints;
    float min_dist = 75;
   final float margin = 1;
+  float alpha;
   
   Birds(){
     birds = new ArrayList<Bird>();
@@ -17,6 +18,7 @@ class Birds{
   }
   
   void reset(){
+    colorMode(RGB);
     birds.clear();
     ArrayList<PVector> points = poissonDisc(min_dist, 30, margin);
     nbirds = points.size();
@@ -26,9 +28,14 @@ class Birds{
     }
   }
   
-  void display(){
-    fill(0,30);
+  void display(int param){
+    alpha = map(param, 0, 8, 100, 0);
+    fill(0,alpha);
+    noStroke();
+    pushMatrix();
+    translate(0,0);
     rect(0,0,width,height);
+    popMatrix();
     for(int i=0; i<birds.size(); i++) {
       birds.get(i).display();
     }
@@ -114,7 +121,7 @@ class Bird{
   
     endShape(); // not CLOSED!
     wingspan_r -= 0.2;
-    if(wingspan_r<-200){wingspan_r=200;}
+    if(wingspan_r<-400){wingspan_r=400;}
     popMatrix();
   }
 }

@@ -17,7 +17,6 @@ class Circle {
     stroke(255);
     strokeWeight(2);
     int rnd=(int) random(1,3);
-    rectMode(CENTER);
     translate(width/2, height/2);
     float current_r = starting_r + counter*increment;
     for(int i=0;i<=ncircles;i++){
