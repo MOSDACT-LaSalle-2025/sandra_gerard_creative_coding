@@ -44,14 +44,31 @@ RandomShapes randomshapes;
 JoyDivision joydivision;
 Circle circle;
 LogoParts lp;
-MovingNoise mn;
 Particlez particlez;
 Birds birds;
 HandFast hands;
+Clouds clouds;
+Squares squares;
+
+//------------------------------------------------------------
+//                         SANDY
+//------------------------------------------------------------
+// VARIABLES PARA EL FADE GLOBAL DE IMÁGENES
+float alphaTarget = 255; // Objetivo de transparencia (255: visible, 0: oculto)
+float alphaCurrent = 255; // Transparencia actual
+float fadeSpeed = 10; // Velocidad del fade (ajusta a tu gusto)
+ArrayList<PImage> imagenes;
+ArrayList<Visual> visuals;
+int cantidadImagenes = 98;
+int duracion = 10;
+int frecuencia = 3;
+int indiceActual = 0;
+
 
 int sketchPointer=100;
 int bgPointer=100;
 int param=0;
+int reversecounter;
 
 void setup(){
   //size(1920, 1080);
@@ -59,6 +76,8 @@ void setup(){
   background(0);
   frameRate(30);
 
+  //reversecounter = 1/frameRate * 
+  
   // Audio Library loading
   minim = new Minim(this);
   player = minim.loadFile("/resources/audio/divinity.wav", 512);
@@ -71,10 +90,12 @@ void setup(){
   joydivision = new JoyDivision(player);
   circle = new Circle();
   lp = new LogoParts();
-  mn = new MovingNoise();
   particlez = new Particlez();
   birds = new Birds();
   hands = new HandFast(); 
+  loadHandsSlow();
+  clouds = new Clouds();
+  squares = new Squares();
   
   player.play();
 }
@@ -83,7 +104,6 @@ void setup(){
 void draw(){
   switch(bgPointer){
     case 0:
-      mn.display();
       break;
     case 100:
       background(0);
@@ -101,10 +121,10 @@ void draw(){
       osci.display(player, param);
       break;
     case 2:
-      randomshapes.display(player, param);
+      randomshapes.display();
       break;
     case 3:
-      randomshapes.display(player, param);
+      randomshapes.display();
       joydivision.display(player);
       break;
     case 4:
@@ -116,19 +136,31 @@ void draw(){
     case 6:
       hands.display();
       break;
+    case 7:
+        // 2. DIBUJAR IMÁGENES (Visuals)
+        if (alphaTarget == 255 || alphaCurrent > 1) {
+            if (frameCount % frecuencia == 0) {
+                if (!imagenes.isEmpty()) {
+                    PImage imgNueva = imagenes.get(indiceActual);
+                    visuals.add(new Visual(imgNueva, duracion));
+                    indiceActual = (indiceActual + 1) % imagenes.size();
+                }
+            }
+            // Asegura el modo de mezcla normal para las imágenes
+            blendMode(BLEND);
+            for (int i = visuals.size() - 1; i >= 0; i--) {
+                Visual v = visuals.get(i);
+                v.update();
+                v.display();
+                if (v.isDead()) {
+                    visuals.remove(i);
+                }
+            }
+        }
+      break;
     case 100:
       break;
     // PREP________________________________________________
-    case 509:
-      textAlign(CENTER);
-      textSize(25);
-      fill(255);
-      text("Loading resources...", width/2, height/2);
-      break;
-    case 510:
-      break;
-    case 511:
-      break;
       
       
   }
@@ -141,10 +173,18 @@ void draw(){
   if(lp.active){
      lp.display();
   }
+  if(clouds.active){
+    clouds.display();
+  }
+  if(squares.active){
+    squares.display();
+  }
 }
 
 
 void keyPressed(){
+  blendMode(BLEND);
+  
   switch(key){
     case 'a':
       sketchPointer=0;
@@ -157,29 +197,31 @@ void keyPressed(){
       break;
     case 'd':
       sketchPointer=2;
-      randomshapes.initialize();
+      bgPointer=101;
+      background(0);
       break;
     case 'f':
       sketchPointer=3;
-      randomshapes.initialize();
       joydivision.initialize();
       break;
-    case 'g':
+    case 'q':
       particlez.reset();
       bgPointer=101;
       sketchPointer=4;
       break;
-    case 'h':
+    case 'w':
       birds.reset();
       sketchPointer=5;
       bgPointer=101;
       break;
-    case 'j':
+    case 'e':
       sketchPointer=6;
       bgPointer=100;
       break;
-    case 'b':
-      circle.active = true;
+    case 'r':
+      sketchPointer=7;
+      bgPointer=101;
+      alphaTarget = (alphaTarget == 255) ? 0 : 255;
       break;
      // ___________BACKGROUNDS_____________
      case 'p':
@@ -190,6 +232,9 @@ void keyPressed(){
       bgPointer = 100;
       sketchPointer = 100;
       break;
+    case 'b':
+      circle.active = true;
+      break;
     case 'm':
       lp.active=true;
       lp.full=false;
@@ -197,6 +242,12 @@ void keyPressed(){
     case 'n':
       lp.active=true;
       lp.full=true;
+      break;
+    case 'v':
+      clouds.active=true;
+      break;
+    case 'c':
+      squares.active=true;
       break;
     case ' ':
       filter(INVERT);
@@ -224,5 +275,29 @@ void keyReleased(){
       lp.reset();
       lp.activate();
       break;
+    case 'v':
+      clouds.active=false;
+      break;
+    case 'c':
+      squares.active=false;
+      break;
   }
+}
+
+
+void loadHandsSlow(){
+    imagenes = new ArrayList<PImage>();
+    for (int i = 1; i <= cantidadImagenes; i++) {
+        // Asegúrate de que las imágenes están en la carpeta 'data' del sketch
+        PImage img = loadImage("resources/images/handslow/downloadedImage (" + i + ").png");
+        if (img != null) imagenes.add(img);
+    }
+    println("✅ Se cargaron " + imagenes.size() + " imágenes.");
+    
+    visuals = new ArrayList<Visual>();
+    if (!imagenes.isEmpty()) {
+        PImage imgInicial = imagenes.get(indiceActual);
+        visuals.add(new Visual(imgInicial, duracion));
+        indiceActual = (indiceActual + 1) % imagenes.size();
+    }
 }

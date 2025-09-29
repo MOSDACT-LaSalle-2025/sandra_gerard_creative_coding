@@ -1,14 +1,13 @@
 class HandFast{
   String path = "/resources/images/hand/";
   ArrayList<PImage> hands;
-  int nimages = 49;
-  int targetW = 1920; // set the desired width
-  int targetH = 1080; // set the desired height
+  int nimages = 48;
+
   
   HandFast(){
      hands = new ArrayList<PImage>();
      for(int i=1; i<=nimages; i++){
-       String filename = path + "ALBUMLOGO" + i + ".png";
+       String filename = path + "ALBUMLOGO-" + i + ".png";
        PImage img = loadImage(filename);
        hands.add(img);
      }
@@ -16,7 +15,7 @@ class HandFast{
   
   void display(){
     imageMode(CENTER);
-    int rnd = (int) random(1,49);
+    int rnd = (int) random(1,nimages);
     
     pushMatrix();
     translate(width/2,height/2);
