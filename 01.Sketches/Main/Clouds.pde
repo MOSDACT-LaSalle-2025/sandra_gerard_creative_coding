@@ -1,5 +1,5 @@
 class Clouds{
-  // Variables para la cuadrícula y el tamaño
+  // Variables para la cuadricula y el tamaño
   int cloudGridWidth = 37;
   int cloudGridHeight = 7;
   int minPixelSize = 2;
@@ -7,15 +7,14 @@ class Clouds{
   
   boolean active=false;
   
-  // Colores base para el degradado
+  // Colores degradados base
   color baseDark = color(50, 20, 100);
   color baseMedium = color(100, 50, 150);
   color baseLight = color(50, 100, 200);
   
-  // Lista para almacenar los datos de las nubes
   ArrayList<CloudData> cloudsData;
   
-  // Clase para almacenar los datos de cada nube
+  // Clase nubes
   class CloudData {
     float x, y;
     int width, height;
@@ -31,7 +30,7 @@ class Clouds{
       this.shape = generateRandomShape();
     }
   
-    // Genera una nueva forma aleatoria para esta nube
+    // Regenerar 
     void regenerateShape() {
       this.shape = generateRandomShape();
     }
@@ -77,10 +76,10 @@ class Clouds{
     //background(50, 150, 200);
   
     for (CloudData cloud : cloudsData) {
-      // Mueve la nube a la izquierda
+      // Mover la nube
       cloud.x -= 1;
   
-      // Si la nube sale de la pantalla, la resetea al lado derecho
+      // Si la nube sale de la pantalla, resetea
       if (cloud.x < - (cloud.width)) {
         cloud.x = width;
         cloud.y = random(height);
@@ -92,7 +91,7 @@ class Clouds{
   }
   
   // ==========================
-  // Función para dibujar una nube
+  // Dibujo Nube
   // ==========================
   void drawCloud(float startX, float startY, int pixelSize, int[][] cloudShape) {
     for (int row = 0; row < cloudGridHeight; row++) {

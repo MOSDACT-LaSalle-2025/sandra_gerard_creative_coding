@@ -19,9 +19,9 @@ class Lyrics{
   }
   
   void display() {
-    noStroke();
-    fill(0,alpha);
-    rect(0, 0, width, height);
+    //noStroke();
+    //fill(0,alpha);
+    //rect(0, 0, width, height);
     //background(0);
     
     for(int j=0; j<=height; j+=20){

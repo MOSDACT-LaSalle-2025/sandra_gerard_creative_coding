@@ -82,7 +82,6 @@ class Eye{
   float x,y;
   float easing=0.1;
 
-  // Also consider coloring the strokes and eyelids
   
   // Constructor
   Eye(float xpos, float ypos, float size, float rotation, float pupil_radius){
@@ -153,14 +152,9 @@ class Eye{
     eyeImg.beginDraw();
     eyeImg.background(sclera_clr);
     eyeImg.fill(iris_clr);
-    eyeImg.ellipse(w/2 + hor_offset, h + vert_offset, h*1.5, h*1.5);
+    eyeImg.ellipse(w/2, h, h*1.5, h*1.5);
     eyeImg.fill(0);
-    eyeImg.ellipse(w/2+ hor_offset, h+ vert_offset, pupil_radius/3, pupil_radius*2);
-    //Debug
-    //eyeImg.stroke(0);
-    //eyeImg.strokeWeight(5);
-    //eyeImg.point(0,h);
-    //eyeImg.endDraw();
+    eyeImg.ellipse(w/2, h, pupil_radius/3, pupil_radius*2);
     
     eyeImg.mask(mask);
     imageMode(CENTER);
@@ -176,9 +170,6 @@ class Eye{
     bezierVertex(w/4, currentH, -w/4, currentH, -w/2, 0);   // bottom lid
     endShape(CLOSE);
 
-    // PUPIL
-    //fill(0);
-    //ellipse(0, 0, pupil_radius/2, pupil_radius*2);
     
     popMatrix();
   }

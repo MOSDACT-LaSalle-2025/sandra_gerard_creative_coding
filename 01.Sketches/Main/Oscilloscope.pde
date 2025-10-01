@@ -6,13 +6,13 @@ class Oscilloscope{
   Oscilloscope() {
     shapes[0] = QUAD_STRIP;
     shapes[1] = TRIANGLE_FAN;
-    shapes[2] = POINTS;
+    shapes[2] = TRIANGLE_STRIP;
     shapes[3] = TRIANGLES;
     shapes[4] = TRIANGLE_STRIP;
     shapes[5] = TRIANGLE_FAN;
     shapes[6] = QUADS;
     shapes[7] = QUAD_STRIP;
-    shapes[8] = POINTS;
+    shapes[8] = TRIANGLES;
     shapes[9] = TRIANGLE_FAN;
   }
   

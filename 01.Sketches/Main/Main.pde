@@ -83,8 +83,8 @@ void setup(){
   
   // Audio Library loading
   minim = new Minim(this);
-  player = minim.loadFile("/resources/audio/divinity.wav", 512);
-  //player.cue(200000);  //-> por si necesitamos empezar en un punto en concreto
+  player = minim.loadFile("/resources/audio/divinity_v2.wav", 512);
+  //player.cue(60000);  //-> por si necesitamos empezar en un punto en concreto
   
   loadVariables();
   sketchPointer = 511;
@@ -115,7 +115,7 @@ void draw(){
       randomshapes.display();
       break;
     case 3:
-      randomshapes.display();
+      //randomshapes.display();
       joydivision.display(player);
       break;
     case 4:

@@ -17,7 +17,12 @@ class JoyDivision {
   }
 
   void display(AudioPlayer player) {
+    colorMode(RGB, 255);
+    fill(0, 0, 0, 50);  // black with low alpha
+    noStroke();
+    rect(0, 0, width, height);
     //background(0);
+    colorMode(HSB, 255);
     stroke(255);
     noFill();
     
