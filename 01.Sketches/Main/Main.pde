@@ -49,6 +49,9 @@ Birds birds;
 HandFast hands;
 Clouds clouds;
 Squares squares;
+Prep prep;
+Lyrics lyrics;
+FinalScene fs;
 
 //------------------------------------------------------------
 //                         SANDY
@@ -68,10 +71,10 @@ int indiceActual = 0;
 int sketchPointer=100;
 int bgPointer=100;
 int param=0;
-int reversecounter;
+boolean ready=false;
 
 void setup(){
-  //size(1920, 1080);
+
   fullScreen();
   background(0);
   frameRate(30);
@@ -81,23 +84,11 @@ void setup(){
   // Audio Library loading
   minim = new Minim(this);
   player = minim.loadFile("/resources/audio/divinity.wav", 512);
-  //player.cue(50000);  -> por si necesitamos empezar en un punto en concreto
-
+  //player.cue(200000);  //-> por si necesitamos empezar en un punto en concreto
   
-  eyestrobe = new EyeStrobe();
-  osci = new Oscilloscope();
-  randomshapes = new RandomShapes();
-  joydivision = new JoyDivision(player);
-  circle = new Circle();
-  lp = new LogoParts();
-  particlez = new Particlez();
-  birds = new Birds();
-  hands = new HandFast(); 
-  loadHandsSlow();
-  clouds = new Clouds();
-  squares = new Squares();
-  
-  player.play();
+  loadVariables();
+  sketchPointer = 511;
+  bgPointer=100;
 }
 
 
@@ -158,10 +149,19 @@ void draw(){
             }
         }
       break;
+    case 8:
+      fs.display();
+      break;
     case 100:
       break;
     // PREP________________________________________________
-      
+    case 511:
+      prep.display();
+      break;
+    case 512:
+      player.play();
+      sketchPointer = 100;
+      break;
       
   }
   
@@ -178,6 +178,9 @@ void draw(){
   }
   if(squares.active){
     squares.display();
+  }
+  if(lyrics.active){
+    lyrics.display();
   }
 }
 
@@ -204,6 +207,10 @@ void keyPressed(){
       sketchPointer=3;
       joydivision.initialize();
       break;
+    case 'g':
+      sketchPointer=6;
+      bgPointer=100;
+      break;
     case 'q':
       particlez.reset();
       bgPointer=101;
@@ -215,23 +222,38 @@ void keyPressed(){
       bgPointer=101;
       break;
     case 'e':
-      sketchPointer=6;
-      bgPointer=100;
-      break;
-    case 'r':
       sketchPointer=7;
       bgPointer=101;
       alphaTarget = (alphaTarget == 255) ? 0 : 255;
       break;
-     // ___________BACKGROUNDS_____________
+    case 'l':
+      sketchPointer = 8;
+      fs.init();
+      break;
+
+     // ___________LYRICS________________
+     case 'u':
+       lyrics.text = "lean into my side";
+       lyrics.active = true;
+       lyrics.init();
+       break;
+     case 'i':
+       lyrics.text = "never felt alive";
+       lyrics.active = true;
+       lyrics.init();
+       break;
+     case 'o':
+       lyrics.text = "call the chants inside";
+       lyrics.active = true;
+       lyrics.init();
+       break;
      case 'p':
-       bgPointer = 0;
+       lyrics.text = "we will wait for this";
+       lyrics.active = true;
+       lyrics.init();
        break;
      // ___________OVERLAYS______________
-    case '\u0008':
-      bgPointer = 100;
-      sketchPointer = 100;
-      break;
+
     case 'b':
       circle.active = true;
       break;
@@ -251,6 +273,14 @@ void keyPressed(){
       break;
     case ' ':
       filter(INVERT);
+      break;
+    case '\u0008':
+      bgPointer = 100;
+      sketchPointer = 100;
+      break;
+    case '\n': // Enter
+      sketchPointer = 512;
+      bgPointer=100;
       break;
     default:
       if (key >= '1' && key <= '9'){
@@ -281,6 +311,19 @@ void keyReleased(){
     case 'c':
       squares.active=false;
       break;
+     // ___________LYRICS________________
+     case 'u':
+       lyrics.active = false;
+       break;
+     case 'i':
+       lyrics.active = false;
+       break;
+     case 'o':
+       lyrics.active = false;
+       break;
+     case 'p':
+       lyrics.active = false;
+       break;
   }
 }
 
@@ -300,4 +343,23 @@ void loadHandsSlow(){
         visuals.add(new Visual(imgInicial, duracion));
         indiceActual = (indiceActual + 1) % imagenes.size();
     }
+}
+
+
+void loadVariables(){
+  eyestrobe = new EyeStrobe();
+  osci = new Oscilloscope();
+  randomshapes = new RandomShapes();
+  joydivision = new JoyDivision(player);
+  circle = new Circle();
+  lp = new LogoParts();
+  particlez = new Particlez();
+  birds = new Birds();
+  hands = new HandFast(); 
+  loadHandsSlow();
+  clouds = new Clouds();
+  squares = new Squares();
+  prep = new Prep();
+  lyrics = new Lyrics();
+  fs = new FinalScene();
 }

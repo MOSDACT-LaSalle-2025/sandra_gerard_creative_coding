@@ -120,7 +120,7 @@ class Bird{
     }
   
     endShape(); // not CLOSED!
-    wingspan_r -= 0.2;
+    wingspan_r -= 0.4;
     if(wingspan_r<-400){wingspan_r=400;}
     popMatrix();
   }

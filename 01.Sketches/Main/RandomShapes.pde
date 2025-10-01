@@ -34,7 +34,7 @@ class PuntoLuz {
     
     // Velocidad inicial pequeña y aleatoria
     velocidad = PVector.random2D(); // Vector aleatorio 2D
-    velocidad.mult(random(0.5, 1.5)); // Escala la velocidad
+    velocidad.mult(random(1000, 1200)); // Escala la velocidad
 
     // ⭐ MODIFICACIÓN 1: Tamaño más pequeño para que parezcan puntos
     // Rango de 0.5 a 2.0 para puntos muy pequeños

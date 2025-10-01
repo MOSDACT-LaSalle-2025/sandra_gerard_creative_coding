@@ -18,15 +18,16 @@ class Squares{
     // 1. Efecto de "Fade" o persistencia de imagen
     // Esto crea el arrastre y desenfoque. Un 'glitch' no borra la pantalla
     // por completo, sino que deja un rastro.
-    fill(0, opacidadBase); 
-    rect(width / 2, height / 2, width, height); 
+    noStroke();
+    //fill(0, opacidadBase); 
+    //rect(0, 0, width, height); 
   
     // 2. Apagón de Luz Blanca (Flicker Intenso)
     // Genera un destello de luz blanca que simula un fallo eléctrico o de pantalla.
     if (frameCount % maxApagon == 0) { // Ocurre cada 'maxApagon' frames
       // Un fuerte destello blanco que dura solo un frame
       fill(COLOR_BLANCO, opacidadMaxima);
-      rect(width / 2, height / 2, width, height);
+      rect(0, 0, width, height);
     }
   
     // 3. Generación y Dibujo de Cuadrados Glitch
